@@ -10,22 +10,22 @@ import UIKit
 class ResultViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
-
+    
     var bmiResult: Double?
-//    var classification: String?
-
+    //    var classification: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         if let bmi = bmiResult {
             resultLabel.text = String(format: "%.1f", bmi)
         }
-//        statusLabel.text = classification
+        //        statusLabel.text = classification
     }
-
+    
     @IBAction func backButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
-
-
+    
+    
 }

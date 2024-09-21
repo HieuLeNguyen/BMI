@@ -57,79 +57,79 @@ class ViewController: UIViewController {
         
         lineWeightButton.addTarget(self, action: #selector(startDecreaseWeight), for: .touchDown)
         lineWeightButton.addTarget(self, action: #selector(stopWeightChange), for: [.touchUpInside, .touchUpOutside])
-
+        
         // Action Age
         plusAgeButton.addTarget(self, action: #selector(startIncreaseAge), for: .touchDown)
         plusAgeButton.addTarget(self, action: #selector(stopAgeChange), for: [.touchUpInside, .touchUpOutside])
-
+        
         lineAgeButton.addTarget(self, action: #selector(startDecreaseAge), for: .touchDown)
         lineAgeButton.addTarget(self, action: #selector(stopAgeChange), for: [.touchUpInside, .touchUpOutside])
-
-
+        
+        
     }
     
     // MARK: - Weight
-        @objc private func startIncreaseWeight() {
-            plusWeightButton.backgroundColor = .lightGray
-            weightTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(increaseWeight), userInfo: nil, repeats: true)
+    @objc private func startIncreaseWeight() {
+        plusWeightButton.backgroundColor = .lightGray
+        weightTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(increaseWeight), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func startDecreaseWeight() {
+        lineWeightButton.backgroundColor = .lightGray
+        weightTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(decreaseWeight), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func stopWeightChange() {
+        weightTimer?.invalidate()
+        plusWeightButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
+        lineWeightButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
+    }
+    
+    @objc private func increaseWeight() {
+        if currentValueWeight < maxValueWeight {
+            currentValueWeight += 1
+            valueWeightLabel.text = "\(currentValueWeight)"
         }
-
-        @objc private func startDecreaseWeight() {
-            lineWeightButton.backgroundColor = .lightGray
-            weightTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(decreaseWeight), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func decreaseWeight() {
+        if currentValueWeight > minValueWeight {
+            currentValueWeight -= 1
+            valueWeightLabel.text = "\(currentValueWeight)"
         }
-
-        @objc private func stopWeightChange() {
-            weightTimer?.invalidate()
-            plusWeightButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
-            lineWeightButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
+    }
+    
+    // MARK: - Age
+    @objc private func startIncreaseAge() {
+        plusAgeButton.backgroundColor = .lightGray
+        ageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(increaseAge), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func startDecreaseAge() {
+        lineAgeButton.backgroundColor = .lightGray
+        ageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(decreaseAge), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func stopAgeChange() {
+        plusAgeButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
+        lineAgeButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
+        ageTimer?.invalidate()
+    }
+    
+    @objc private func increaseAge() {
+        if currentValueAge < maxValueAge {
+            currentValueAge += 1
+            valueAgeLabel.text = "\(currentValueAge)"
         }
-
-        @objc private func increaseWeight() {
-            if currentValueWeight < maxValueWeight {
-                currentValueWeight += 1
-                valueWeightLabel.text = "\(currentValueWeight)"
-            }
+    }
+    
+    @objc private func decreaseAge() {
+        if currentValueAge > minValueAge {
+            currentValueAge -= 1
+            valueAgeLabel.text = "\(currentValueAge)"
         }
-
-        @objc private func decreaseWeight() {
-            if currentValueWeight > minValueWeight {
-                currentValueWeight -= 1
-                valueWeightLabel.text = "\(currentValueWeight)"
-            }
-        }
-
-        // MARK: - Age
-        @objc private func startIncreaseAge() {
-            plusAgeButton.backgroundColor = .lightGray
-            ageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(increaseAge), userInfo: nil, repeats: true)
-        }
-
-        @objc private func startDecreaseAge() {
-            lineAgeButton.backgroundColor = .lightGray
-            ageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(decreaseAge), userInfo: nil, repeats: true)
-        }
-
-        @objc private func stopAgeChange() {
-            plusAgeButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
-            lineAgeButton.backgroundColor = UIColor(red: 29/255.0, green: 31/255.0, blue: 49/255.0, alpha: 1.0)
-            ageTimer?.invalidate()
-        }
-
-        @objc private func increaseAge() {
-            if currentValueAge < maxValueAge {
-                currentValueAge += 1
-                valueAgeLabel.text = "\(currentValueAge)"
-            }
-        }
-
-        @objc private func decreaseAge() {
-            if currentValueAge > minValueAge {
-                currentValueAge -= 1
-                valueAgeLabel.text = "\(currentValueAge)"
-            }
-        }
-
+    }
+    
     //MARK: - Create action for view
     private func createButtonWithUIView(_ uiView: UIView) {
         let tapGesture = UITapGestureRecognizer(target: self, action:  #selector(tapButtonAC))
@@ -155,7 +155,7 @@ class ViewController: UIViewController {
     private func highlightView(_ view: UIView) {
         view.alpha = 1
     }
-
+    
     
     //MARK: - Register for table view menubar
     private func registerTableView() {
@@ -170,7 +170,7 @@ class ViewController: UIViewController {
             view?.layer.cornerRadius = 6
             view?.layer.masksToBounds = true
         }
-
+        
         lineWeightButton.layer.cornerRadius = lineWeightButton.frame.width / 2
         plusWeightButton.layer.cornerRadius = plusWeightButton.frame.width / 2
         lineAgeButton.layer.cornerRadius = lineAgeButton.frame.width / 2
@@ -248,12 +248,12 @@ class ViewController: UIViewController {
         guard let height = height, let weight = weight else { return }
         
         let bmi = calculateBMI(withHeight: height, withWeight: weight)
-//        let classificationResult = classify(bmi)!
-
+        //        let classificationResult = classify(bmi)!
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let resultVC = storyboard.instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController {
             resultVC.bmiResult = bmi
-//            resultVC.classification = classificationResult
+            //            resultVC.classification = classificationResult
             navigationController?.pushViewController(resultVC, animated: true)
         }
     }
